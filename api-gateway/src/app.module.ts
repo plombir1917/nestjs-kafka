@@ -1,9 +1,5 @@
 import { IntrospectAndCompose, RemoteGraphQLDataSource } from '@apollo/gateway';
-import {
-  ApolloGatewayDriver,
-  ApolloGatewayDriverAsyncConfig,
-  ApolloGatewayDriverConfig,
-} from '@nestjs/apollo';
+import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
