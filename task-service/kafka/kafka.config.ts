@@ -1,7 +1,7 @@
 import { ClientProviderOptions, Transport } from '@nestjs/microservices';
 
 export const kafkaConfig: ClientProviderOptions = {
-  name: 'TASK_SERVICE',
+  name: 'task-service',
   transport: Transport.KAFKA,
   options: {
     client: {
