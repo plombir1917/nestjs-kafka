@@ -8,6 +8,7 @@ import {
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { TaskResolver } from './task.resolver';
 import { PrismaService } from 'prisma/prisma.service';
+import { KafkaModule } from 'kafka/kafka.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PrismaService } from 'prisma/prisma.service';
         return formattedError;
       },
     }),
+    KafkaModule,
   ],
   providers: [TaskService, TaskResolver, PrismaService],
 })
