@@ -3,6 +3,7 @@ import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ProducerService } from 'kafka/producer.service';
+import { CreateUserTaskDto } from './dto/create-user-task.dto';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -18,10 +19,21 @@ export class UserResolver {
 
   @Query(() => User)
   async findUser(@Args('id') id: number) {
-    const res = this.kafka.produce({
-      topic: 'user_task',
-      messages: [{ value: id.toString() }],
-    });
     return await this.userService.findUser(id);
+  }
+
+  @Mutation(() => User)
+  async createUserTask(
+    @Args('createUserTaskDto') createUserTaskDto: CreateUserTaskDto,
+  ) {
+    return await this.kafka.produce({
+      topic: 'user_task',
+      messages: [
+        {
+          key: 'createUserTaskDto',
+          value: JSON.stringify(createUserTaskDto),
+        },
+      ],
+    });
   }
 }
