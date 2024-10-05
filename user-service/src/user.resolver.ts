@@ -1,11 +1,15 @@
-import { Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { ProducerService } from 'kafka/producer.service';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly kafka: ProducerService,
+  ) {}
 
   @Mutation(() => User)
   async createUser(createUserDto: CreateUserDto) {
@@ -13,7 +17,11 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async findUser(id: number) {
+  async findUser(@Args('id') id: number) {
+    const res = this.kafka.produce({
+      topic: 'user_task',
+      messages: [{ value: id.toString() }],
+    });
     return await this.userService.findUser(id);
   }
 }

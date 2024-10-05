@@ -9,6 +9,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { TaskResolver } from './task.resolver';
 import { PrismaService } from 'prisma/prisma.service';
 import { KafkaModule } from 'kafka/kafka.module';
+import { UserTaskConsumer } from 'kafka/user_task.consumer';
 
 @Module({
   imports: [
@@ -31,6 +32,6 @@ import { KafkaModule } from 'kafka/kafka.module';
     }),
     KafkaModule,
   ],
-  providers: [TaskService, TaskResolver, PrismaService],
+  providers: [TaskService, TaskResolver, PrismaService, UserTaskConsumer],
 })
 export class TaskModule {}

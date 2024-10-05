@@ -1,4 +1,4 @@
-import { Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Task } from './entities/task.entity';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -15,7 +15,9 @@ export class TaskResolver {
   }
 
   @Mutation(() => UserTask)
-  async createTaskUser(createUserTaskDto: CreateUserTaskDto) {
+  async createTaskUser(
+    @Args('createUserTaskDto') createUserTaskDto: CreateUserTaskDto,
+  ) {
     return await this.taskService.createTaskUser(createUserTaskDto);
   }
 

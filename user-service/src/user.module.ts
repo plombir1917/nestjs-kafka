@@ -8,6 +8,7 @@ import {
 } from '@nestjs/apollo';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { UserResolver } from './user.resolver';
+import { KafkaModule } from 'kafka/kafka.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { UserResolver } from './user.resolver';
         return formattedError;
       },
     }),
+    KafkaModule,
   ],
   providers: [UserService, UserResolver, PrismaService],
 })
